@@ -32,6 +32,7 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
+          apt install -y aria2
           wget "https://raw.githubusercontent.com/kedarnathdev/rclone/main/rclone.conf" --no-check-certificate -O ".rclone.conf"
           mv .rclone.conf /home/runner
           curl https://rclone.org/install.sh | sudo bash
@@ -40,5 +41,5 @@ jobs:
           mkdir ~/downloadss
           chmod 755 ~/downloadss/
           cd ~/downloadss
-          wget "${{ secrets.LINK }}" --no-check-certificate -O "${{ secrets.NAME }}"
+          aria2c "${{ secrets.LINK }}" -o "${{ secrets.NAME }}"
           rclone -v copy ~/downloadss drive:Tollywood
